@@ -41,7 +41,8 @@ func createTrade(response http.ResponseWriter, request *http.Request) {
 	json.NewEncoder(response).Encode(result)
 }
 
-func getTradeById(response http.ResponseWriter, request *http.Request) { }
+//func getTradeById(response http.ResponseWriter, request *http.Request) { }
+
 func getTrades(writer http.ResponseWriter, request *http.Request) {
 	writer.Header().Set("Content-Type", "application/json")
 	var trades []Trade
@@ -66,7 +67,13 @@ func getTrades(writer http.ResponseWriter, request *http.Request) {
 	}
 	json.NewEncoder(writer).Encode(trades)
 }
-func getTradesByUser(response http.ResponseWriter, request *http.Request) { }
+func getTradesByUser(response http.ResponseWriter, request *http.Request) {}
+//	writer.Header().Set("Content-Type", "application/json")
+//	var trades []Trade
+//	collection := client.Database("fdm_trades").Collection("trades")
+//	ctx, _ := context.WithTimeout(context.Background(), 30*time.Second)
+//	cursor, err := collection.Find(ctx, bson.M{"username": request.})
+//}
 
 
 
@@ -79,7 +86,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/trades", getTrades).Methods("GET") //TODO admin only
 	router.HandleFunc("/api/trades/{username}", getTradesByUser).Methods("GET")
-	router.HandleFunc("/api/trades/{id}", getTradeById).Methods("GET")
+	//router.HandleFunc("/api/trades/{id}", getTradeById).Methods("GET")
 	router.HandleFunc("/api/trades/create", createTrade).Methods("POST")
 	log.Fatal(http.ListenAndServe(":12345", router))
 }
